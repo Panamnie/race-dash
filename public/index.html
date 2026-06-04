@@ -410,6 +410,14 @@
     .fullscreen-btn:active { background: var(--red); color: #fff; }
 
     /* ════════════════════════════════
+       LANDSCAPE — pills-portrait niewidoczny,
+       3 pille są bezpośrednimi dziećmi grida
+    ════════════════════════════════ */
+    .pills-portrait {
+      display: contents;
+    }
+
+    /* ════════════════════════════════
        PORTRAIT MODE
     ════════════════════════════════ */
     @media (orientation: portrait) {
@@ -420,58 +428,77 @@
         min-height: 100vh;
         grid-template-rows: auto auto auto;
         padding: 14px 10px 50px;
+        gap: 7px;
       }
 
+      /* Top row: flex kolumna — selector + pills w jednej linii */
       .top-row {
-        grid-template-columns: 1fr;
-        grid-template-rows: 48px 50px;
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
       }
 
-      .select-card {
-        grid-column: 1 / -1;
-        height: 48px;
-      }
+      .select-card { height: 48px; }
 
-      /* 3 pille w jednej linii */
+      /* Pills w jednym rzędzie 3 kolumny */
       .pills-portrait {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 7px;
+        height: 50px;
       }
 
       .top-pill { min-width: 0; }
 
-      .main-row {
-        grid-template-columns: 1fr;
+      /* Main row — jedna kolumna */
+      .main-row { grid-template-columns: 1fr; }
+      .right-stack { grid-template-rows: auto auto; }
+
+      /* Last lap — skompaktowana, czas wyśrodkowany */
+      .last-card {
+        padding: 10px 16px;
+        justify-content: center;
+        gap: 6px;
+        min-height: 120px;
+        max-height: 160px;
       }
 
-      .right-stack {
-        grid-template-rows: auto auto;
+      .last-value {
+        font-size: 76px;
+        text-align: center;
       }
 
-      .last-value { font-size: 88px; }
-      .best-value { font-size: 72px; }
+      /* Best lap — skompaktowana */
+      .best-card {
+        padding: 10px 16px;
+        justify-content: center;
+        gap: 6px;
+        min-height: 100px;
+        max-height: 140px;
+      }
 
-      .sector-value { font-size: 44px; }
+      .best-value {
+        font-size: 62px;
+        text-align: center;
+      }
 
+      /* Sektory — mniejsze w pionie */
       .bottom-row { grid-template-columns: repeat(3, 1fr); }
 
-      /* Większa karta kierowcy w pionie */
-      .driver-card {
-        padding: 10px 12px;
+      .sector-card {
+        min-height: 80px;
+        max-height: 100px;
+        padding: 6px 8px 8px;
       }
 
-      .pos-block {
-        width: 58px;
-      }
+      .sector-value { font-size: 34px; }
 
-      .driver-name {
-        font-size: 28px;
-      }
-
+      /* Karta kierowcy */
+      .driver-card { padding: 10px 12px; }
+      .pos-block { width: 56px; }
+      .driver-name { font-size: 26px; }
       .meta-chip .ml { font-size: 10px; }
-      .meta-chip .mv { font-size: 22px; }
-
+      .meta-chip .mv { font-size: 20px; }
       .driver-meta { gap: 8px; }
     }
   </style>
