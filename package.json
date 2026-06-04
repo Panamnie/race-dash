@@ -1,0 +1,17 @@
+{
+  "name": "race-dash",
+  "version": "1.0.0",
+  "description": "Race Dash - live karting dashboard dla Cartmax Lublin",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "eventsource": "^2.0.2"
+  }
+}
