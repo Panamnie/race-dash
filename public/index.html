@@ -274,6 +274,14 @@
       min-width: 0;
     }
 
+    .driver-row-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      min-width: 0;
+    }
+
     .driver-name {
       font-size: clamp(18px, 3.5vw, 42px);
       font-weight: 900;
@@ -324,7 +332,8 @@
       padding: 6px 10px 8px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
+      gap: 4px;
       position: relative;
       overflow: hidden;
     }
@@ -414,14 +423,23 @@
       }
 
       .top-row {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto auto;
+        grid-template-columns: 1fr;
+        grid-template-rows: 48px 50px;
       }
 
       .select-card {
         grid-column: 1 / -1;
         height: 48px;
       }
+
+      /* 3 pille w jednej linii */
+      .pills-portrait {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 7px;
+      }
+
+      .top-pill { min-width: 0; }
 
       .main-row {
         grid-template-columns: 1fr;
@@ -437,6 +455,24 @@
       .sector-value { font-size: 44px; }
 
       .bottom-row { grid-template-columns: repeat(3, 1fr); }
+
+      /* Większa karta kierowcy w pionie */
+      .driver-card {
+        padding: 10px 12px;
+      }
+
+      .pos-block {
+        width: 58px;
+      }
+
+      .driver-name {
+        font-size: 28px;
+      }
+
+      .meta-chip .ml { font-size: 10px; }
+      .meta-chip .mv { font-size: 22px; }
+
+      .driver-meta { gap: 8px; }
     }
   </style>
 </head>
@@ -451,19 +487,21 @@
       <select id="kartSelect"><option value="">Ładowanie...</option></select>
     </div>
 
-    <div class="top-pill">
-      <div class="pill-label">Delta</div>
-      <div class="pill-value" id="prevDelta">---</div>
-    </div>
+    <div class="pills-portrait">
+      <div class="top-pill">
+        <div class="pill-label">Delta</div>
+        <div class="pill-value" id="prevDelta">---</div>
+      </div>
 
-    <div class="top-pill">
-      <div class="pill-label">Pozycja</div>
-      <div class="pill-value pos" id="positionTop">P--</div>
-    </div>
+      <div class="top-pill">
+        <div class="pill-label">Pozycja</div>
+        <div class="pill-value pos" id="positionTop">P--</div>
+      </div>
 
-    <div class="top-pill">
-      <div class="pill-label">Sesja</div>
-      <div class="pill-value time" id="sessionTime">--:--:--</div>
+      <div class="top-pill">
+        <div class="pill-label">Sesja</div>
+        <div class="pill-value time" id="sessionTime">--:--:--</div>
+      </div>
     </div>
   </div>
 
@@ -488,19 +526,21 @@
         </div>
 
         <div class="driver-info">
-          <div class="driver-name" id="driver">BRAK DANYCH</div>
-          <div class="driver-meta">
-            <div class="meta-chip">
-              <span class="ml">KART</span>
-              <span class="mv" id="kartNumber">--</span>
-            </div>
-            <div class="meta-chip">
-              <span class="ml">LAP</span>
-              <span class="mv" id="sessionLap">--</span>
-            </div>
-            <div class="meta-chip">
-              <span class="ml">OKR.</span>
-              <span class="mv" id="laps">--</span>
+          <div class="driver-row-top">
+            <div class="driver-name" id="driver">BRAK DANYCH</div>
+            <div class="driver-meta">
+              <div class="meta-chip">
+                <span class="ml">KART</span>
+                <span class="mv" id="kartNumber">--</span>
+              </div>
+              <div class="meta-chip">
+                <span class="ml">LAP</span>
+                <span class="mv" id="sessionLap">--</span>
+              </div>
+              <div class="meta-chip">
+                <span class="ml">OKR.</span>
+                <span class="mv" id="laps">--</span>
+              </div>
             </div>
           </div>
           <div class="data-age" id="dataAge">---</div>
