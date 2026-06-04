@@ -140,14 +140,14 @@
       border: 1px solid var(--border);
       border-left: 3px solid var(--cyan);
       border-radius: 4px;
-      padding: 10px 16px;
+      padding: 5px 14px;
       display: flex; flex-direction: column;
-      justify-content: center; gap: 6px;
+      justify-content: center; gap: 2px;
       position: relative; overflow: hidden;
     }
-    .last-label { color: var(--cyan); font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; }
+    .last-label { color: var(--cyan); font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; }
     .last-value {
-      font-size: clamp(42px, 17vh, 96px); font-weight: 300; line-height: 1;
+      font-size: clamp(44px, 21vh, 110px); font-weight: 300; line-height: 1;
       letter-spacing: -2px; color: var(--cyan); text-align: center;
     }
 
@@ -157,14 +157,14 @@
       border: 1px solid var(--border);
       border-left: 3px solid var(--purple);
       border-radius: 4px;
-      padding: 10px 16px;
+      padding: 5px 14px;
       display: flex; flex-direction: column;
-      justify-content: center; gap: 6px;
+      justify-content: center; gap: 2px;
       position: relative; overflow: hidden;
     }
-    .best-label { color: var(--purple); font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; }
+    .best-label { color: var(--purple); font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; }
     .best-value {
-      font-size: clamp(42px, 17vh, 96px); font-weight: 300; line-height: 1;
+      font-size: clamp(44px, 21vh, 110px); font-weight: 300; line-height: 1;
       letter-spacing: -2px; color: var(--purple); text-align: center;
     }
 
@@ -183,13 +183,14 @@
     .pos-block {
       background: var(--yellow);
       border-radius: 3px;
-      width: clamp(56px, 14vw, 110px);
-      height: 100%;
+      width: clamp(56px, 12vw, 100px);
+      height: clamp(80px, 22vh, 160px);
+      align-self: center;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center; flex-shrink: 0;
     }
     .pos-label-sm { font-size: 9px; font-weight: 700; letter-spacing: 1px; color: rgba(0,0,0,0.5); text-transform: uppercase; }
-    .pos-number { font-size: clamp(48px, 28vh, 150px); font-weight: 900; line-height: 0.9; color: #000; }
+    .pos-number { font-size: clamp(40px, 16vh, 110px); font-weight: 900; line-height: 0.9; color: #000; }
 
     .driver-info {
       display: flex; flex-direction: column; gap: 8px; min-width: 0;
@@ -214,8 +215,8 @@
     }
     .sector-card {
       background: var(--surface); border: 1px solid var(--border); border-radius: 4px;
-      padding: 6px 10px 8px;
-      display: flex; flex-direction: column; justify-content: center; gap: 4px;
+      padding: 4px 10px 6px;
+      display: flex; flex-direction: column; justify-content: center; gap: 2px;
       position: relative; overflow: hidden;
     }
     .sector-card::after {
@@ -225,7 +226,7 @@
     .s2-card::after { background: var(--amber);  box-shadow: 0 0 8px var(--amber); }
     .s3-card::after { background: var(--green);  box-shadow: 0 0 8px var(--green); }
     .sector-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
-    .sector-value { font-size: clamp(30px, 13vh, 60px); font-weight: 300; line-height: 1; text-align: center; }
+    .sector-value { font-size: clamp(32px, 16vh, 70px); font-weight: 300; line-height: 1; text-align: center; }
     .s1-val { color: var(--cyan); }
     .s2-val { color: var(--amber); }
     .s3-val { color: var(--green); }
