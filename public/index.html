@@ -736,7 +736,7 @@
         const lastLap = value(data.lastLap, "--.--");
         const bestLap = value(data.bestLap, "--.--");
 
-        const prevDelta = updatePrevDelta(kartNumber, lastLap);
+        const prevDelta = value(data.delta, "---");
 
         el.prevDelta.textContent = prevDelta;
         setDeltaColor(prevDelta);
@@ -860,9 +860,9 @@
 
     loadAvailableKarts();
 
-    setInterval(loadAvailableKarts, 2000);
-    setInterval(loadKart, 200);
-    setInterval(updateDataAge, 200);
+    setInterval(loadAvailableKarts, 5000);
+    setInterval(loadKart, 1000);
+    setInterval(updateDataAge, 500);
 
     updateFullscreenButton();
   </script>
