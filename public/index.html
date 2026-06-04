@@ -110,10 +110,10 @@
       letter-spacing: 1.8px; text-transform: uppercase; line-height: 1; margin-bottom: 2px;
     }
     .pill-value {
-      font-size: clamp(18px, 3vw, 30px); font-weight: 700; line-height: 1; white-space: nowrap;
+      font-size: clamp(18px, 6.5vh, 30px); font-weight: 700; line-height: 1; white-space: nowrap;
     }
     .pill-value.pos    { color: var(--yellow); }
-    .pill-value.time   { color: var(--text); font-weight: 300; font-size: clamp(14px, 2.2vw, 22px); }
+    .pill-value.time   { color: var(--text); font-weight: 300; font-size: clamp(14px, 5vh, 24px); }
     .pill-value.dplus  { color: var(--red); }
     .pill-value.dminus { color: var(--green); }
 
@@ -145,9 +145,9 @@
       justify-content: center; gap: 6px;
       position: relative; overflow: hidden;
     }
-    .last-label { color: var(--cyan); font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; }
+    .last-label { color: var(--cyan); font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; }
     .last-value {
-      font-size: clamp(38px, 7vw, 90px); font-weight: 300; line-height: 1;
+      font-size: clamp(42px, 17vh, 96px); font-weight: 300; line-height: 1;
       letter-spacing: -2px; color: var(--cyan); text-align: center;
     }
 
@@ -162,9 +162,9 @@
       justify-content: center; gap: 6px;
       position: relative; overflow: hidden;
     }
-    .best-label { color: var(--purple); font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; }
+    .best-label { color: var(--purple); font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; }
     .best-value {
-      font-size: clamp(38px, 7vw, 90px); font-weight: 300; line-height: 1;
+      font-size: clamp(42px, 17vh, 96px); font-weight: 300; line-height: 1;
       letter-spacing: -2px; color: var(--purple); text-align: center;
     }
 
@@ -183,30 +183,30 @@
     .pos-block {
       background: var(--yellow);
       border-radius: 3px;
-      width: clamp(48px, 7vw, 72px);
+      width: clamp(56px, 14vw, 110px);
       height: 100%;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center; flex-shrink: 0;
     }
-    .pos-label-sm { font-size: 8px; font-weight: 700; letter-spacing: 1px; color: rgba(0,0,0,0.5); text-transform: uppercase; }
-    .pos-number { font-size: clamp(36px, 7vw, 80px); font-weight: 900; line-height: 0.9; color: #000; }
+    .pos-label-sm { font-size: 9px; font-weight: 700; letter-spacing: 1px; color: rgba(0,0,0,0.5); text-transform: uppercase; }
+    .pos-number { font-size: clamp(48px, 28vh, 150px); font-weight: 900; line-height: 0.9; color: #000; }
 
     .driver-info {
-      display: flex; flex-direction: column; gap: 6px; min-width: 0;
+      display: flex; flex-direction: column; gap: 8px; min-width: 0;
     }
     .driver-name {
-      font-size: clamp(20px, 4vw, 52px); font-weight: 900; line-height: 1;
+      font-size: clamp(24px, 8vh, 52px); font-weight: 900; line-height: 1;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-transform: uppercase;
     }
-    .driver-meta { display: flex; gap: 6px; }
+    .driver-meta { display: flex; gap: 8px; }
     .meta-chip {
       background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 3px; padding: 3px 9px;
+      border-radius: 3px; padding: 4px 12px;
       display: flex; flex-direction: column;
     }
-    .meta-chip .ml { font-size: 9px; color: var(--muted); font-weight: 700; letter-spacing: 1px; }
-    .meta-chip .mv { font-size: clamp(14px, 2.2vw, 26px); font-weight: 700; line-height: 1.1; }
-    .data-age { font-size: 9px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+    .meta-chip .ml { font-size: 10px; color: var(--muted); font-weight: 700; letter-spacing: 1px; }
+    .meta-chip .mv { font-size: clamp(18px, 6vh, 36px); font-weight: 700; line-height: 1.1; }
+    .data-age { font-size: 10px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
 
     /* ── SECTORS ── */
     .bottom-row {
@@ -224,8 +224,8 @@
     .s1-card::after { background: var(--cyan);   box-shadow: 0 0 8px var(--cyan); }
     .s2-card::after { background: var(--amber);  box-shadow: 0 0 8px var(--amber); }
     .s3-card::after { background: var(--green);  box-shadow: 0 0 8px var(--green); }
-    .sector-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
-    .sector-value { font-size: clamp(26px, 5vw, 64px); font-weight: 300; line-height: 1; text-align: center; }
+    .sector-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+    .sector-value { font-size: clamp(30px, 13vh, 60px); font-weight: 300; line-height: 1; text-align: center; }
     .s1-val { color: var(--cyan); }
     .s2-val { color: var(--amber); }
     .s3-val { color: var(--green); }
