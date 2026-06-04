@@ -3,868 +3,732 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Race Dash Landscape</title>
+  <title>Race Dash</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #030405;
-      --panel: #0b0d10;
-      --panel2: #11141a;
-      --line: #242a33;
-      --text: #f4f6fb;
-      --muted: #8b94a3;
-      --cyan: #20eaff;
-      --green: #47ff67;
-      --yellow: #f5ff00;
-      --amber: #ffb21a;
-      --red: #ff3152;
-      --blue: #168cff;
+      --bg:       #080809;
+      --surface:  #0f1013;
+      --surface2: #16181d;
+      --border:   #2a2d35;
+      --border2:  #3a3d47;
+      --text:     #f0f2f8;
+      --muted:    #7a8090;
+      --red:      #e8002d;
+      --red-glow: rgba(232,0,45,0.18);
+      --cyan:     #00d4ff;
+      --green:    #39ff6e;
+      --yellow:   #ffe600;
+      --amber:    #ff9500;
+      --white:    #ffffff;
     }
 
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
 
     html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      min-height: 100%;
-      background: #000;
+      width: 100%; height: 100%;
+      background: var(--bg);
       color: var(--text);
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: 'Barlow Condensed', Arial, sans-serif;
       overflow: hidden;
       touch-action: manipulation;
     }
 
-    body {
-      background:
-        radial-gradient(circle at top, #171b22 0%, #050607 48%, #000 100%);
+    /* ── CARBON BACKGROUND ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.012) 0, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 8px),
+        repeating-linear-gradient(-45deg, rgba(255,255,255,0.012) 0, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 8px);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ── RED TOP STRIPE ── */
+    body::after {
+      content: '';
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--red) 20%, var(--red) 80%, transparent);
+      z-index: 100;
     }
 
     .dash {
-      width: 100vw;
-      height: 100vh;
-      padding: 10px;
+      position: relative; z-index: 1;
+      width: 100vw; height: 100vh;
+      padding: 12px 10px 10px;
       display: grid;
-      grid-template-rows: 58px 1fr 96px;
-      gap: 8px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0)),
-        repeating-linear-gradient(
-          135deg,
-          rgba(255,255,255,0.018) 0,
-          rgba(255,255,255,0.018) 2px,
-          transparent 2px,
-          transparent 9px
-        );
+      grid-template-rows: 44px 1fr 90px;
+      gap: 7px;
     }
 
+    /* ════════════════════════════════
+       TOP ROW
+    ════════════════════════════════ */
     .top-row {
       display: grid;
-      grid-template-columns: 1.1fr 0.8fr 0.8fr 0.8fr;
-      gap: 8px;
+      grid-template-columns: 1fr auto auto auto;
+      gap: 7px;
+      align-items: stretch;
     }
 
-    .main-row {
-      display: grid;
-      grid-template-columns: 1.15fr 1fr;
-      gap: 8px;
-      min-height: 0;
-    }
-
-    .bottom-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-    }
-
-    .card {
-      position: relative;
-      background: linear-gradient(180deg, #12161c, #07090c);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.04),
-        0 8px 20px rgba(0,0,0,0.35);
-    }
-
-    .card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(90deg, rgba(255,255,255,0.025), transparent 20%, transparent 80%, rgba(255,255,255,0.015)),
-        repeating-linear-gradient(
-          90deg,
-          rgba(255,255,255,0.012) 0,
-          rgba(255,255,255,0.012) 1px,
-          transparent 1px,
-          transparent 8px
-        );
-      pointer-events: none;
-    }
-
-    .label {
-      color: var(--muted);
-      font-size: clamp(10px, 1.6vw, 17px);
-      font-weight: 900;
-      letter-spacing: 1.7px;
-      text-transform: uppercase;
-    }
-
-    .small {
-      font-size: clamp(9px, 1.3vw, 14px);
-      color: var(--muted);
-      font-weight: 800;
-      letter-spacing: 1px;
-    }
-
+    /* Kart selector */
     .select-card {
-      padding: 8px 10px;
-      display: grid;
-      grid-template-rows: auto 1fr;
-      gap: 5px;
-    }
-
-    select {
-      width: 100%;
-      height: 100%;
-      min-height: 32px;
-      background: #050608;
-      border: 1px solid #293241;
-      border-radius: 9px;
-      color: var(--text);
-      font-size: clamp(18px, 3vw, 36px);
-      font-weight: 900;
-      padding: 4px 12px;
-      outline: none;
-    }
-
-    .top-stat {
-      padding: 7px 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--red);
+      border-radius: 4px;
+      padding: 0 10px;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 4px;
+      align-items: center;
+      gap: 8px;
     }
 
-    .top-value {
-      font-size: clamp(25px, 4.5vw, 54px);
-      font-weight: 300;
-      line-height: 1;
-      color: var(--text);
+    .select-label {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
       white-space: nowrap;
     }
 
-    .top-value.delta-plus {
-      color: var(--red);
-      text-shadow: 0 0 13px rgba(255,49,82,0.25);
-    }
-
-    .top-value.delta-minus {
-      color: var(--green);
-      text-shadow: 0 0 13px rgba(71,255,103,0.22);
-    }
-
-    .top-value.pos {
-      color: var(--yellow);
-      font-weight: 900;
-      text-shadow: 0 0 14px rgba(245,255,0,0.18);
-    }
-
-    .top-value.time {
+    select {
+      background: transparent;
+      border: none;
       color: var(--text);
-      font-size: clamp(18px, 3vw, 42px);
+      font-family: 'Barlow Condensed', Arial, sans-serif;
+      font-size: clamp(16px, 2.5vw, 26px);
+      font-weight: 700;
+      outline: none;
+      min-width: 0;
+      flex: 1;
     }
 
-    .last-card {
-      padding: 12px;
+    select option { background: #1a1c22; }
+
+    /* Top stat pills */
+    .top-pill {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0 12px;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      min-width: 70px;
     }
 
-    .last-title {
-      color: var(--cyan);
-      margin-bottom: 6px;
+    .pill-label {
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 2px;
     }
+
+    .pill-value {
+      font-size: clamp(18px, 3vw, 30px);
+      font-weight: 700;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .pill-value.pos    { color: var(--yellow); }
+    .pill-value.time   { color: var(--text); font-weight: 300; font-size: clamp(14px, 2.2vw, 22px); }
+    .pill-value.dplus  { color: var(--red); }
+    .pill-value.dminus { color: var(--green); }
+
+    /* ════════════════════════════════
+       MAIN ROW
+    ════════════════════════════════ */
+    .main-row {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 7px;
+      min-height: 0;
+    }
+
+    /* Last Lap */
+    .last-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .last-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; bottom: 0;
+      width: 3px;
+      background: var(--cyan);
+      box-shadow: 0 0 12px var(--cyan);
+    }
+
+    .card-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
+
+    .last-label { color: var(--cyan); }
+    .best-label { color: var(--green); }
 
     .last-value {
-      color: var(--text);
-      font-size: clamp(54px, 12vw, 150px);
+      font-size: clamp(52px, 11vw, 130px);
       font-weight: 300;
-      line-height: 0.95;
-      letter-spacing: -3px;
-      text-shadow: 0 0 18px rgba(32,234,255,0.08);
+      line-height: 0.9;
+      letter-spacing: -2px;
+      color: var(--white);
     }
 
+    /* Right stack */
     .right-stack {
       display: grid;
-      grid-template-rows: 1fr 0.78fr;
-      gap: 8px;
+      grid-template-rows: 1fr 0.85fr;
+      gap: 7px;
       min-height: 0;
     }
 
     .best-card {
-      padding: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 14px 16px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
     }
 
-    .best-title {
-      color: var(--green);
-      margin-bottom: 6px;
+    .best-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; bottom: 0;
+      width: 3px;
+      background: var(--green);
+      box-shadow: 0 0 12px rgba(57,255,110,0.5);
     }
 
     .best-value {
-      color: var(--green);
-      font-size: clamp(45px, 9vw, 116px);
+      font-size: clamp(40px, 8vw, 100px);
       font-weight: 300;
-      line-height: 0.95;
+      line-height: 0.9;
       letter-spacing: -2px;
-      text-shadow: 0 0 16px rgba(71,255,103,0.18);
+      color: var(--green);
     }
 
-    .race-card {
+    /* Driver card */
+    .driver-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 8px 10px;
       display: grid;
-      grid-template-columns: 0.75fr 1.35fr;
+      grid-template-columns: auto 1fr;
       gap: 8px;
-      padding: 10px;
-    }
-
-    .race-pos-box {
-      background: rgba(245,255,0,0.09);
-      border: 1px solid rgba(245,255,0,0.16);
-      border-radius: 10px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
     }
 
-    .race-pos-label {
-      color: var(--muted);
-      font-size: clamp(10px, 1.4vw, 16px);
-      font-weight: 900;
-      letter-spacing: 1px;
-      margin-bottom: 3px;
+    .pos-block {
+      background: var(--yellow);
+      border-radius: 3px;
+      width: clamp(42px, 6vw, 64px);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
 
-    .race-pos {
-      color: var(--yellow);
-      font-size: clamp(52px, 10vw, 130px);
+    .pos-label-sm {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: rgba(0,0,0,0.55);
+      text-transform: uppercase;
+    }
+
+    .pos-number {
+      font-size: clamp(32px, 6vw, 72px);
       font-weight: 900;
       line-height: 0.9;
-      text-shadow: 0 0 18px rgba(245,255,0,0.18);
+      color: #000;
     }
 
-    .driver-box {
-      display: grid;
-      grid-template-rows: 1fr auto auto;
-      gap: 4px;
-      align-content: center;
+    .driver-info {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
       min-width: 0;
     }
 
     .driver-name {
-      font-size: clamp(21px, 4vw, 56px);
+      font-size: clamp(18px, 3.5vw, 42px);
       font-weight: 900;
       line-height: 1;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      text-transform: uppercase;
     }
 
-    .driver-info {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+    .driver-meta {
+      display: flex;
       gap: 6px;
     }
 
-    .info-mini {
-      background: rgba(255,255,255,0.035);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 8px;
-      padding: 5px 7px;
+    .meta-chip {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 2px 7px;
+      display: flex;
+      flex-direction: column;
     }
 
-    .info-mini .val {
-      font-size: clamp(15px, 2.2vw, 27px);
-      font-weight: 900;
-      line-height: 1;
-      color: var(--text);
-    }
+    .meta-chip .ml { font-size: 8px; color: var(--muted); font-weight: 700; letter-spacing: 1px; }
+    .meta-chip .mv { font-size: clamp(13px, 2vw, 20px); font-weight: 700; line-height: 1.1; }
 
     .data-age {
+      font-size: 9px;
       color: var(--muted);
-      font-size: clamp(9px, 1.2vw, 13px);
       letter-spacing: 1px;
       text-transform: uppercase;
     }
 
-    .sector-card {
-      padding: 8px 10px;
+    /* ════════════════════════════════
+       BOTTOM — SECTORS
+    ════════════════════════════════ */
+    .bottom-row {
       display: grid;
-      grid-template-rows: auto 1fr;
-      align-items: center;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+    }
+
+    .sector-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 6px 10px 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sector-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px;
+    }
+
+    .s1-card::after { background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+    .s2-card::after { background: var(--amber); box-shadow: 0 0 8px var(--amber); }
+    .s3-card::after { background: var(--green); box-shadow: 0 0 8px var(--green); }
+
+    .sector-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
     }
 
     .sector-value {
-      font-size: clamp(34px, 6.5vw, 80px);
+      font-size: clamp(28px, 5.5vw, 68px);
       font-weight: 300;
       line-height: 1;
       text-align: center;
     }
 
-    .s1 {
-      color: var(--cyan);
-      text-shadow: 0 0 14px rgba(32,234,255,0.13);
+    .s1-val { color: var(--cyan); }
+    .s2-val { color: var(--amber); }
+    .s3-val { color: var(--green); }
+
+    /* ════════════════════════════════
+       FLASH ANIMATION
+    ════════════════════════════════ */
+    @keyframes flash {
+      0%   { opacity: 1; }
+      30%  { opacity: 0.4; }
+      100% { opacity: 1; }
     }
 
-    .s2 {
-      color: var(--amber);
-      text-shadow: 0 0 14px rgba(255,178,26,0.15);
+    .updated {
+      animation: flash 0.4s ease;
     }
 
-    .s3 {
-      color: var(--green);
-      text-shadow: 0 0 14px rgba(71,255,103,0.13);
-    }
-
+    /* ════════════════════════════════
+       UI CONTROLS
+    ════════════════════════════════ */
     .warn {
-      position: fixed;
-      left: 12px;
-      bottom: 8px;
+      position: fixed; left: 10px; bottom: 6px;
       color: var(--red);
-      font-size: 12px;
-      font-weight: 800;
-      z-index: 20;
-      pointer-events: none;
-      max-width: 50vw;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1px;
+      z-index: 20; pointer-events: none;
     }
 
     .fullscreen-btn {
-      position: fixed;
-      right: 12px;
-      bottom: 8px;
+      position: fixed; right: 10px; bottom: 6px;
       z-index: 50;
-      background: linear-gradient(180deg, #18202a, #07090c);
-      border: 1px solid rgba(32,234,255,0.45);
-      color: var(--cyan);
-      border-radius: 10px;
-      padding: 9px 14px;
-      font-size: 13px;
-      font-weight: 900;
-      letter-spacing: 1px;
+      background: var(--surface2);
+      border: 1px solid var(--red);
+      color: var(--red);
+      border-radius: 3px;
+      padding: 7px 14px;
+      font-family: 'Barlow Condensed', Arial, sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 2px;
       text-transform: uppercase;
-      box-shadow: 0 0 14px rgba(32,234,255,0.12);
+      cursor: pointer;
+      transition: background 0.15s;
     }
 
-    .fullscreen-btn:active {
-      transform: scale(0.96);
-    }
+    .fullscreen-btn:active { background: var(--red); color: #fff; }
 
-    body.fullscreen-mode .dash {
-      padding: 6px;
-      gap: 6px;
-    }
-
-    body.fullscreen-mode .fullscreen-btn {
-      opacity: 0.45;
-    }
-
-    body.fullscreen-mode .fullscreen-btn:hover,
-    body.fullscreen-mode .fullscreen-btn:active {
-      opacity: 1;
-    }
-
+    /* ════════════════════════════════
+       PORTRAIT MODE
+    ════════════════════════════════ */
     @media (orientation: portrait) {
-      html, body {
-        overflow: auto;
-      }
+      html, body { overflow: auto; }
 
       .dash {
         height: auto;
         min-height: 100vh;
         grid-template-rows: auto auto auto;
+        padding: 14px 10px 50px;
       }
 
       .top-row {
         grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
       }
 
       .select-card {
         grid-column: 1 / -1;
+        height: 48px;
       }
 
       .main-row {
         grid-template-columns: 1fr;
       }
 
-      .bottom-row {
-        grid-template-columns: 1fr;
+      .right-stack {
+        grid-template-rows: auto auto;
       }
 
-      .last-value {
-        font-size: 82px;
-      }
+      .last-value { font-size: 88px; }
+      .best-value { font-size: 72px; }
 
-      .best-value {
-        font-size: 64px;
-      }
+      .sector-value { font-size: 44px; }
 
-      .fullscreen-btn {
-        right: 10px;
-        bottom: 10px;
-      }
+      .bottom-row { grid-template-columns: repeat(3, 1fr); }
     }
   </style>
 </head>
-
 <body>
-  <div class="dash">
-    <div class="top-row">
-      <div class="card select-card">
-        <div class="label">Wybierz wózek</div>
-        <select id="kartSelect">
-          <option value="">Ładowanie...</option>
-        </select>
-      </div>
 
-      <div class="card top-stat">
-        <div class="label">Delta do poprzedniego</div>
-        <div class="top-value" id="prevDelta">---</div>
-      </div>
+<div class="dash">
 
-      <div class="card top-stat">
-        <div class="label">Pozycja</div>
-        <div class="top-value pos" id="positionTop">P--</div>
-      </div>
-
-      <div class="card top-stat">
-        <div class="label">Czas sesji</div>
-        <div class="top-value time" id="sessionTime">--:--:--</div>
-      </div>
+  <!-- TOP ROW -->
+  <div class="top-row">
+    <div class="select-card">
+      <span class="select-label">Wózek</span>
+      <select id="kartSelect"><option value="">Ładowanie...</option></select>
     </div>
 
-    <div class="main-row">
-      <div class="card last-card">
-        <div class="label last-title">Last lap</div>
-        <div class="last-value" id="lastLap">--.--</div>
-      </div>
-
-      <div class="right-stack">
-        <div class="card best-card">
-          <div class="label best-title">Best lap</div>
-          <div class="best-value" id="bestLap">--.--</div>
-        </div>
-
-        <div class="card race-card">
-          <div class="race-pos-box">
-            <div class="race-pos-label">Pozycja w wyścigu</div>
-            <div class="race-pos" id="racePosition">--</div>
-          </div>
-
-          <div class="driver-box">
-            <div class="driver-name" id="driver">BRAK DANYCH</div>
-
-            <div class="driver-info">
-              <div class="info-mini">
-                <div class="small">KART</div>
-                <div class="val" id="kartNumber">--</div>
-              </div>
-
-              <div class="info-mini">
-                <div class="small">LAP</div>
-                <div class="val" id="sessionLap">--</div>
-              </div>
-
-              <div class="info-mini">
-                <div class="small">OKR.</div>
-                <div class="val" id="laps">--</div>
-              </div>
-            </div>
-
-            <div class="data-age" id="dataAge">---</div>
-          </div>
-        </div>
-      </div>
+    <div class="top-pill">
+      <div class="pill-label">Delta</div>
+      <div class="pill-value" id="prevDelta">---</div>
     </div>
 
-    <div class="bottom-row">
-      <div class="card sector-card">
-        <div class="label">Sector 1</div>
-        <div class="sector-value s1" id="s1">---</div>
-      </div>
+    <div class="top-pill">
+      <div class="pill-label">Pozycja</div>
+      <div class="pill-value pos" id="positionTop">P--</div>
+    </div>
 
-      <div class="card sector-card">
-        <div class="label">Sector 2</div>
-        <div class="sector-value s2" id="s2">---</div>
-      </div>
-
-      <div class="card sector-card">
-        <div class="label">Sector 3</div>
-        <div class="sector-value s3" id="s3">---</div>
-      </div>
+    <div class="top-pill">
+      <div class="pill-label">Sesja</div>
+      <div class="pill-value time" id="sessionTime">--:--:--</div>
     </div>
   </div>
 
-  <div class="warn" id="warn"></div>
-
-  <button class="fullscreen-btn" id="fullscreenBtn" type="button">
-    FULLSCREEN
-  </button>
-
-  <script>
-    const select = document.getElementById("kartSelect");
-
-    const el = {
-      prevDelta: document.getElementById("prevDelta"),
-      positionTop: document.getElementById("positionTop"),
-      sessionTime: document.getElementById("sessionTime"),
-      lastLap: document.getElementById("lastLap"),
-      bestLap: document.getElementById("bestLap"),
-      racePosition: document.getElementById("racePosition"),
-      driver: document.getElementById("driver"),
-      kartNumber: document.getElementById("kartNumber"),
-      sessionLap: document.getElementById("sessionLap"),
-      laps: document.getElementById("laps"),
-      s1: document.getElementById("s1"),
-      s2: document.getElementById("s2"),
-      s3: document.getElementById("s3"),
-      dataAge: document.getElementById("dataAge"),
-      warn: document.getElementById("warn"),
-      fullscreenBtn: document.getElementById("fullscreenBtn")
-    };
-
-    let availableKarts = [];
-    let selectedKartMemory = localStorage.getItem("selectedKart") || "";
-    let firstKartLoaded = false;
-    let lastDataUpdate = null;
-
-    const lapMemory = {};
-    const deltaMemory = {};
-
-    function value(v, fallback = "---") {
-      if (v === undefined || v === null || v === "") return fallback;
-      return String(v);
-    }
-
-    function parseLapTime(t) {
-      if (!t) return null;
-
-      const text = String(t).trim().replace(",", ".");
-      const parts = text.split(":");
-
-      if (parts.length === 1) {
-        const n = Number(parts[0]);
-        return Number.isFinite(n) ? n : null;
-      }
-
-      if (parts.length === 2) {
-        const min = Number(parts[0]);
-        const sec = Number(parts[1]);
-        if (Number.isFinite(min) && Number.isFinite(sec)) {
-          return min * 60 + sec;
-        }
-      }
-
-      return null;
-    }
-
-    function formatDelta(seconds) {
-      if (seconds === null || seconds === undefined || !Number.isFinite(seconds)) {
-        return "---";
-      }
-
-      const sign = seconds >= 0 ? "+" : "-";
-      return sign + Math.abs(seconds).toFixed(3);
-    }
-
-    function updatePrevDelta(kart, lastLap) {
-      const lapSec = parseLapTime(lastLap);
-      if (lapSec === null) return deltaMemory[kart] || "---";
-
-      if (lapMemory[kart] === undefined) {
-        lapMemory[kart] = lapSec;
-        deltaMemory[kart] = "---";
-        return "---";
-      }
-
-      if (Math.abs(lapMemory[kart] - lapSec) > 0.001) {
-        const diff = lapSec - lapMemory[kart];
-        lapMemory[kart] = lapSec;
-        deltaMemory[kart] = formatDelta(diff);
-      }
-
-      return deltaMemory[kart] || "---";
-    }
-
-    function setDeltaColor(deltaText) {
-      el.prevDelta.classList.remove("delta-plus", "delta-minus");
-
-      if (deltaText.startsWith("+")) {
-        el.prevDelta.classList.add("delta-plus");
-      } else if (deltaText.startsWith("-")) {
-        el.prevDelta.classList.add("delta-minus");
-      }
-    }
-
-    function sortKarts(karts) {
-      return karts.sort((a, b) => {
-        const na = Number(a);
-        const nb = Number(b);
-
-        if (!Number.isNaN(na) && !Number.isNaN(nb)) return na - nb;
-        return String(a).localeCompare(String(b));
-      });
-    }
-
-    function uniqueList(list) {
-      return [...new Set(list)];
-    }
-
-    function showEmpty(kartNumber, message) {
-      el.prevDelta.textContent = "---";
-      setDeltaColor("---");
-      el.positionTop.textContent = "P--";
-      el.sessionTime.textContent = "--:--:--";
-      el.lastLap.textContent = "--.--";
-      el.bestLap.textContent = "--.--";
-      el.racePosition.textContent = "--";
-      el.driver.textContent = "BRAK DANYCH";
-      el.kartNumber.textContent = kartNumber || "--";
-      el.sessionLap.textContent = "--";
-      el.laps.textContent = "--";
-      el.s1.textContent = "---";
-      el.s2.textContent = "---";
-      el.s3.textContent = "---";
-      el.dataAge.textContent = "---";
-      el.warn.textContent = message || "";
-    }
-
-    function updateDataAge() {
-      if (!lastDataUpdate) {
-        el.dataAge.textContent = "---";
-        return;
-      }
-
-      const diffSec = ((Date.now() - lastDataUpdate) / 1000).toFixed(1);
-      el.dataAge.textContent = "AKTUALIZACJA: " + diffSec + " s temu";
-    }
-
-    async function loadAvailableKarts() {
-      try {
-        const res = await fetch("/api/live", { cache: "no-store" });
-        const data = await res.json();
-
-        if (!data.karts || !Array.isArray(data.karts)) return;
-
-        const newKarts = sortKarts(uniqueList(
-          data.karts
-            .map(k => String(k.kart))
-            .filter(k => k && k !== "undefined" && k !== "null")
-        ));
-
-        const oldList = availableKarts.join(",");
-        const newList = newKarts.join(",");
-
-        if (oldList === newList && firstKartLoaded) return;
-
-        availableKarts = newKarts;
-        const currentSelected = select.value || selectedKartMemory;
-
-        select.innerHTML = "";
-
-        if (availableKarts.length === 0) {
-          const option = document.createElement("option");
-          option.value = "";
-          option.textContent = "Brak wózków";
-          select.appendChild(option);
-
-          firstKartLoaded = false;
-          showEmpty("", "Brak dostępnych wózków");
-          return;
-        }
-
-        availableKarts.forEach(kartNumber => {
-          const option = document.createElement("option");
-          option.value = kartNumber;
-          option.textContent = "Wózek " + kartNumber;
-          select.appendChild(option);
-        });
-
-        if (availableKarts.includes(currentSelected)) {
-          select.value = currentSelected;
-        } else {
-          select.value = availableKarts[0];
-        }
-
-        selectedKartMemory = select.value;
-        localStorage.setItem("selectedKart", selectedKartMemory);
-
-        firstKartLoaded = true;
-        loadKart();
-
-      } catch (err) {
-        el.warn.textContent = "Błąd listy wózków";
-      }
-    }
-
-    async function loadKart() {
-      const kartNumber = select.value;
-
-      if (!kartNumber) {
-        showEmpty("", "Wybierz wózek");
-        return;
-      }
-
-      try {
-        const res = await fetch(`/api/kart/${kartNumber}`, { cache: "no-store" });
-        const data = await res.json();
-
-        if (!res.ok || data.error) {
-          showEmpty(kartNumber, data.message || "Brak danych dla wózka");
-          return;
-        }
-
-        const position = value(data.position, "--");
-        const lastLap = value(data.lastLap, "--.--");
-        const bestLap = value(data.bestLap, "--.--");
-
-        const prevDelta = value(data.delta, "---");
-
-        el.prevDelta.textContent = prevDelta;
-        setDeltaColor(prevDelta);
-
-        el.positionTop.textContent = "P" + position;
-        el.sessionTime.textContent = value(data.sessionTime, "--:--:--");
-
-        el.lastLap.textContent = lastLap;
-        el.bestLap.textContent = bestLap;
-
-        el.racePosition.textContent = position;
-        el.driver.textContent = value(data.driver, "BRAK DANYCH");
-
-        el.kartNumber.textContent = value(data.kart, kartNumber);
-        el.sessionLap.textContent = value(data.sessionLap, "--");
-        el.laps.textContent = value(data.laps, "--");
-
-        el.s1.textContent = value(data.sector1, "---");
-        el.s2.textContent = value(data.sector2, "---");
-        el.s3.textContent = value(data.sector3, "---");
-
-        el.warn.textContent = "";
-
-        if (data.updatedAt) {
-          const parsedDate = new Date(data.updatedAt).getTime();
-          if (!Number.isNaN(parsedDate)) {
-            lastDataUpdate = parsedDate;
-            updateDataAge();
-          }
-        }
-
-      } catch (err) {
-        showEmpty(kartNumber, "Brak połączenia z lokalnym serwerem");
-      }
-    }
-
-    function isFullscreen() {
-      return document.fullscreenElement ||
-             document.webkitFullscreenElement ||
-             document.msFullscreenElement;
-    }
-
-    function updateFullscreenButton() {
-      if (isFullscreen()) {
-        el.fullscreenBtn.textContent = "EXIT";
-        document.body.classList.add("fullscreen-mode");
-      } else {
-        el.fullscreenBtn.textContent = "FULLSCREEN";
-        document.body.classList.remove("fullscreen-mode");
-      }
-    }
-
-    async function enterFullscreen() {
-      const target = document.documentElement;
-
-      try {
-        if (target.requestFullscreen) {
-          await target.requestFullscreen();
-        } else if (target.webkitRequestFullscreen) {
-          target.webkitRequestFullscreen();
-        } else if (target.msRequestFullscreen) {
-          target.msRequestFullscreen();
-        }
-
-        if (screen.orientation && screen.orientation.lock) {
-          try {
-            await screen.orientation.lock("landscape");
-          } catch (err) {
-            console.log("Nie można zablokować orientacji:", err);
-          }
-        }
-      } catch (err) {
-        console.log("Fullscreen error:", err);
-        el.warn.textContent = "Przeglądarka nie pozwoliła wejść w fullscreen";
-      }
-
-      updateFullscreenButton();
-    }
-
-    async function exitFullscreen() {
-      try {
-        if (document.exitFullscreen) {
-          await document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-          document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) {
-          document.msExitFullscreen();
-        }
-
-        if (screen.orientation && screen.orientation.unlock) {
-          try {
-            screen.orientation.unlock();
-          } catch (err) {
-            console.log("Nie można odblokować orientacji:", err);
-          }
-        }
-      } catch (err) {
-        console.log("Exit fullscreen error:", err);
-      }
-
-      updateFullscreenButton();
-    }
-
-    el.fullscreenBtn.addEventListener("click", function () {
-      if (isFullscreen()) {
-        exitFullscreen();
-      } else {
-        enterFullscreen();
-      }
+  <!-- MAIN ROW -->
+  <div class="main-row">
+
+    <div class="last-card">
+      <div class="card-label last-label">Last Lap</div>
+      <div class="last-value" id="lastLap">--.---</div>
+    </div>
+
+    <div class="right-stack">
+      <div class="best-card">
+        <div class="card-label best-label">Best Lap</div>
+        <div class="best-value" id="bestLap">--.---</div>
+      </div>
+
+      <div class="driver-card">
+        <div class="pos-block">
+          <div class="pos-label-sm">POS</div>
+          <div class="pos-number" id="racePosition">--</div>
+        </div>
+
+        <div class="driver-info">
+          <div class="driver-name" id="driver">BRAK DANYCH</div>
+          <div class="driver-meta">
+            <div class="meta-chip">
+              <span class="ml">KART</span>
+              <span class="mv" id="kartNumber">--</span>
+            </div>
+            <div class="meta-chip">
+              <span class="ml">LAP</span>
+              <span class="mv" id="sessionLap">--</span>
+            </div>
+            <div class="meta-chip">
+              <span class="ml">OKR.</span>
+              <span class="mv" id="laps">--</span>
+            </div>
+          </div>
+          <div class="data-age" id="dataAge">---</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SECTORS -->
+  <div class="bottom-row">
+    <div class="sector-card s1-card">
+      <div class="sector-label">Sector 1</div>
+      <div class="sector-value s1-val" id="s1">---</div>
+    </div>
+    <div class="sector-card s2-card">
+      <div class="sector-label">Sector 2</div>
+      <div class="sector-value s2-val" id="s2">---</div>
+    </div>
+    <div class="sector-card s3-card">
+      <div class="sector-label">Sector 3</div>
+      <div class="sector-value s3-val" id="s3">---</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="warn" id="warn"></div>
+<button class="fullscreen-btn" id="fullscreenBtn" type="button">FULLSCREEN</button>
+
+<script>
+  const select = document.getElementById("kartSelect");
+
+  const el = {
+    prevDelta:    document.getElementById("prevDelta"),
+    positionTop:  document.getElementById("positionTop"),
+    sessionTime:  document.getElementById("sessionTime"),
+    lastLap:      document.getElementById("lastLap"),
+    bestLap:      document.getElementById("bestLap"),
+    racePosition: document.getElementById("racePosition"),
+    driver:       document.getElementById("driver"),
+    kartNumber:   document.getElementById("kartNumber"),
+    sessionLap:   document.getElementById("sessionLap"),
+    laps:         document.getElementById("laps"),
+    s1:           document.getElementById("s1"),
+    s2:           document.getElementById("s2"),
+    s3:           document.getElementById("s3"),
+    dataAge:      document.getElementById("dataAge"),
+    warn:         document.getElementById("warn"),
+    fullscreenBtn:document.getElementById("fullscreenBtn")
+  };
+
+  let availableKarts = [];
+  let selectedKartMemory = localStorage.getItem("selectedKart") || "";
+  let firstKartLoaded = false;
+  let lastDataUpdate = null;
+  let lastLastLap = null;
+
+  function value(v, fallback = "---") {
+    if (v === undefined || v === null || v === "") return fallback;
+    return String(v);
+  }
+
+  function flash(element) {
+    element.classList.remove("updated");
+    void element.offsetWidth;
+    element.classList.add("updated");
+  }
+
+  function setDeltaColor(deltaText) {
+    el.prevDelta.classList.remove("dplus", "dminus");
+    if (deltaText.startsWith("+")) el.prevDelta.classList.add("dplus");
+    else if (deltaText.startsWith("-")) el.prevDelta.classList.add("dminus");
+  }
+
+  function sortKarts(karts) {
+    return karts.sort((a, b) => {
+      const na = Number(a), nb = Number(b);
+      if (!isNaN(na) && !isNaN(nb)) return na - nb;
+      return String(a).localeCompare(String(b));
     });
+  }
 
-    document.addEventListener("fullscreenchange", updateFullscreenButton);
-    document.addEventListener("webkitfullscreenchange", updateFullscreenButton);
-    document.addEventListener("MSFullscreenChange", updateFullscreenButton);
+  function showEmpty(kartNumber, message) {
+    el.prevDelta.textContent = "---";
+    setDeltaColor("---");
+    el.positionTop.textContent = "P--";
+    el.sessionTime.textContent = "--:--:--";
+    el.lastLap.textContent = "--.---";
+    el.bestLap.textContent = "--.---";
+    el.racePosition.textContent = "--";
+    el.driver.textContent = "BRAK DANYCH";
+    el.kartNumber.textContent = kartNumber || "--";
+    el.sessionLap.textContent = "--";
+    el.laps.textContent = "--";
+    el.s1.textContent = "---";
+    el.s2.textContent = "---";
+    el.s3.textContent = "---";
+    el.dataAge.textContent = "---";
+    el.warn.textContent = message || "";
+  }
 
-    select.addEventListener("change", function () {
+  function updateDataAge() {
+    if (!lastDataUpdate) { el.dataAge.textContent = "---"; return; }
+    const diff = ((Date.now() - lastDataUpdate) / 1000).toFixed(1);
+    el.dataAge.textContent = "DATA: " + diff + "s AGO";
+  }
+
+  async function loadAvailableKarts() {
+    try {
+      const res = await fetch("/api/live", { cache: "no-store" });
+      const data = await res.json();
+      if (!data.karts || !Array.isArray(data.karts)) return;
+
+      const newKarts = sortKarts([...new Set(
+        data.karts.map(k => String(k.kart)).filter(k => k && k !== "undefined" && k !== "null")
+      )]);
+
+      if (newKarts.join(",") === availableKarts.join(",") && firstKartLoaded) return;
+
+      availableKarts = newKarts;
+      const current = select.value || selectedKartMemory;
+      select.innerHTML = "";
+
+      if (!availableKarts.length) {
+        select.innerHTML = '<option value="">Brak wózków</option>';
+        showEmpty("", "Brak dostępnych wózków");
+        return;
+      }
+
+      availableKarts.forEach(k => {
+        const o = document.createElement("option");
+        o.value = k; o.textContent = "Wózek " + k;
+        select.appendChild(o);
+      });
+
+      select.value = availableKarts.includes(current) ? current : availableKarts[0];
       selectedKartMemory = select.value;
       localStorage.setItem("selectedKart", selectedKartMemory);
+      firstKartLoaded = true;
       loadKart();
-    });
+    } catch (e) {
+      el.warn.textContent = "BŁĄD POŁĄCZENIA";
+    }
+  }
 
-    loadAvailableKarts();
+  async function loadKart() {
+    const kartNumber = select.value;
+    if (!kartNumber) { showEmpty("", "WYBIERZ WÓZEK"); return; }
 
-    setInterval(loadAvailableKarts, 5000);
-    setInterval(loadKart, 1000);
-    setInterval(updateDataAge, 500);
+    try {
+      const res = await fetch(`/api/kart/${kartNumber}`, { cache: "no-store" });
+      const data = await res.json();
 
-    updateFullscreenButton();
-  </script>
+      if (!res.ok || data.error) {
+        showEmpty(kartNumber, data.message || "BRAK DANYCH");
+        return;
+      }
+
+      const newLastLap = value(data.lastLap, "--.---");
+      if (newLastLap !== lastLastLap && lastLastLap !== null) {
+        flash(el.lastLap);
+      }
+      lastLastLap = newLastLap;
+
+      const prevDelta = value(data.delta, "---");
+      el.prevDelta.textContent = prevDelta;
+      setDeltaColor(prevDelta);
+
+      el.positionTop.textContent = "P" + value(data.position, "--");
+      el.sessionTime.textContent = value(data.sessionTime, "--:--:--");
+      el.lastLap.textContent = newLastLap;
+      el.bestLap.textContent = value(data.bestLap, "--.---");
+      el.racePosition.textContent = value(data.position, "--");
+      el.driver.textContent = value(data.driver, "BRAK DANYCH");
+      el.kartNumber.textContent = value(data.kart, kartNumber);
+      el.sessionLap.textContent = value(data.sessionLap, "--");
+      el.laps.textContent = value(data.laps, "--");
+      el.s1.textContent = value(data.sector1, "---");
+      el.s2.textContent = value(data.sector2, "---");
+      el.s3.textContent = value(data.sector3, "---");
+      el.warn.textContent = "";
+
+      if (data.updatedAt) {
+        const t = new Date(data.updatedAt).getTime();
+        if (!isNaN(t)) { lastDataUpdate = t; updateDataAge(); }
+      }
+    } catch (e) {
+      showEmpty(kartNumber, "BRAK POŁĄCZENIA Z SERWEREM");
+    }
+  }
+
+  // Fullscreen
+  function isFullscreen() {
+    return document.fullscreenElement || document.webkitFullscreenElement;
+  }
+
+  function updateFsBtn() {
+    el.fullscreenBtn.textContent = isFullscreen() ? "EXIT" : "FULLSCREEN";
+  }
+
+  el.fullscreenBtn.addEventListener("click", async () => {
+    if (isFullscreen()) {
+      try { await (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch(e){}
+    } else {
+      const t = document.documentElement;
+      try {
+        await (t.requestFullscreen || t.webkitRequestFullscreen).call(t);
+        if (screen.orientation?.lock) screen.orientation.lock("landscape").catch(()=>{});
+      } catch(e){}
+    }
+    updateFsBtn();
+  });
+
+  document.addEventListener("fullscreenchange", updateFsBtn);
+  document.addEventListener("webkitfullscreenchange", updateFsBtn);
+
+  select.addEventListener("change", () => {
+    selectedKartMemory = select.value;
+    localStorage.setItem("selectedKart", selectedKartMemory);
+    loadKart();
+  });
+
+  loadAvailableKarts();
+  setInterval(loadAvailableKarts, 5000);
+  setInterval(loadKart, 1000);
+  setInterval(updateDataAge, 500);
+  updateFsBtn();
+</script>
 </body>
 </html>
